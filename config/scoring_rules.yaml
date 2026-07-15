@@ -1,0 +1,95 @@
+# Scoring rules and thresholds for Nalanda Investment Quality Gate
+# Thresholds and mappings are editable without changing source code.
+
+modules:
+  profitability:
+    weight: 1.5
+    metrics:
+      - name: roe_10yr
+        source: financial_ratios
+        field: roe
+        aggregate: mean_last_n
+        n: 10
+        direction: higher_better
+        best: 0.25
+        worst: 0.05
+      - name: roic_10yr
+        source: key_metrics
+        field: roic
+        aggregate: mean_last_n
+        n: 10
+        direction: higher_better
+        best: 0.20
+        worst: 0.03
+    combine: average
+
+  management:
+    weight: 1.0
+    metrics:
+      - name: insider_ownership_pct
+        source: raw
+        path: profile.companyInsiderOwnership
+        aggregate: last
+        direction: higher_better
+        best: 0.2
+        worst: 0.0
+    combine: average
+
+  moat:
+    weight: 1.2
+    metrics:
+      - name: moat_dummy
+        source: raw
+        path: raw_moat_score
+        aggregate: last
+        direction: higher_better
+        best: 1.0
+        worst: 0.0
+    combine: average
+
+  debt:
+    weight: 1.0
+    metrics:
+      - name: net_debt_to_equity
+        source: balance_sheet
+        field: netDebtToEquity
+        aggregate: last
+        direction: lower_better
+        best: 0.0
+        worst: 2.0
+    combine: average
+
+  cashflow:
+    weight: 1.0
+    metrics:
+      - name: fcf_margin
+        source: key_metrics
+        field: fcf_margin
+        aggregate: mean_last_n
+        n: 5
+        direction: higher_better
+        best: 0.2
+        worst: 0.0
+    combine: average
+
+  growth:
+    weight: 1.0
+    metrics:
+      - name: revenue_cagr_10y
+        source: key_metrics
+        field: revenueCAGR
+        aggregate: last
+        direction: higher_better
+        best: 0.2
+        worst: 0.0
+    combine: average
+
+rating_stars:
+  # numeric score (0-100) to star rating mapping
+  thresholds:
+    90: "★★★★★"
+    75: "★★★★"
+    60: "★★★"
+    45: "★★"
+    0:  "★"
+

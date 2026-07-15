@@ -1,0 +1,10 @@
+streamlit==1.22.0
+pandas==2.2.2
+numpy==1.26.5
+SQLAlchemy==2.0.19
+requests==2.31.0
+yfinance==0.2.27
+openai==1.8.5
+python-dotenv==1.0.0
+PyYAML==6.0
+
