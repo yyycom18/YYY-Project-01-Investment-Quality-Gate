@@ -68,3 +68,16 @@ CREATE TABLE IF NOT EXISTS portfolio (
     created_at TEXT
 );
 
+CREATE TABLE IF NOT EXISTS research_journal (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    company_id INTEGER NOT NULL,
+    analysis_date TEXT,
+    quality_score REAL,
+    valuation_json TEXT,
+    recommendation TEXT,
+    ai_memo TEXT,
+    notes TEXT,
+    review_date TEXT,
+    FOREIGN KEY(company_id) REFERENCES companies(id) ON DELETE CASCADE
+);
+

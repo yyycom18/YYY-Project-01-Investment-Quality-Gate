@@ -4,4 +4,8 @@ __pycache__/
 *.pyc
 data/*.sqlite
 secrets/*.json
+data/cache/
+.pytest_cache/
+.DS_Store
+*.log
 

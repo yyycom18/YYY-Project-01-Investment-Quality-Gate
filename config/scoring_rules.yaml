@@ -4,6 +4,7 @@
 modules:
   profitability:
     weight: 1.5
+    pass_threshold: 60
     metrics:
       - name: roe_10yr
         source: financial_ratios
@@ -25,6 +26,7 @@ modules:
 
   management:
     weight: 1.0
+    pass_threshold: 60
     metrics:
       - name: insider_ownership_pct
         source: raw
@@ -37,6 +39,7 @@ modules:
 
   moat:
     weight: 1.2
+    pass_threshold: 60
     metrics:
       - name: moat_dummy
         source: raw
@@ -49,6 +52,7 @@ modules:
 
   debt:
     weight: 1.0
+    pass_threshold: 60
     metrics:
       - name: net_debt_to_equity
         source: balance_sheet
@@ -61,6 +65,7 @@ modules:
 
   cashflow:
     weight: 1.0
+    pass_threshold: 60
     metrics:
       - name: fcf_margin
         source: key_metrics
@@ -74,6 +79,7 @@ modules:
 
   growth:
     weight: 1.0
+    pass_threshold: 60
     metrics:
       - name: revenue_cagr_10y
         source: key_metrics

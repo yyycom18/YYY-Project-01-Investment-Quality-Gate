@@ -45,5 +45,35 @@ def evaluate_overall(model) -> Dict[str, Any]:
     except Exception:
         star = None
 
-    return {"overall_score": overall_score, "rating": star, "modules": results}
+    # compute gates passed based on pass_thresholds in config
+    gates_passed = 0
+    total_gates = len(MODULE_MAP)
+    for name, res in results.items():
+        cfg = modules_cfg.get(name, {})
+        pass_thr = cfg.get("pass_threshold", 60)
+        try:
+            if (res.get("score") or 0.0) >= pass_thr:
+                gates_passed += 1
+        except Exception:
+            pass
+        # annotate module with pass/fail
+        try:
+            res["pass"] = True if (res.get("score") or 0.0) >= pass_thr else False
+        except Exception:
+            res["pass"] = False
+
+    # confidence score: mean of module scores
+    try:
+        confidence = round(sum([res.get("score") or 0.0 for res in results.values()]) / max(1, len(results)), 2)
+    except Exception:
+        confidence = overall_score
+
+    return {
+        "overall_score": overall_score,
+        "rating": star,
+        "modules": results,
+        "gates_passed": gates_passed,
+        "total_gates": total_gates,
+        "confidence": confidence,
+    }
 
